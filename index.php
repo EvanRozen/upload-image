@@ -20,27 +20,31 @@
                 <input type="file" name="fileToUpload" id="fileToUpload"><br>
                 <button type="submit">Upload</button>
             </form>
+            <?php
+                // var_dump($_FILES);
+                if(isset($_FILES['fileToUpload'])&& $_FILES['fileToUpload']['error'] == 0)
+                {
+                    $tmp = $_FILES['fileToUpload']['tmp_name'];
+                    $filename = $_FILES['fileToUpload']['name'];
+                    $dest = 'img/';
+                    $ext = explode(".", $filename);
+                    if ((count($ext) == 2 ) && ($ext[1] == "png")) {
+                        if(move_uploaded_file($tmp,$dest.$filename))
+                        echo 'téléchargement réussi';
+                    } else {
+                        echo "Erreur mauvais format de fichier";
+                    }
+                }
+            ?>
         </div>
         <div class="right">
             <img src="" alt="image preview" id="imgPreview">
         </div>
     </main>
-    <?php
-        // var_dump($_FILES);
-        if(isset($_FILES['fileToUpload'])&& $_FILES['fileToUpload']['error'] == 0)
-        {
-            $tmp = $_FILES['fileToUpload']['tmp_name'];
-            $filename = $_FILES['fileToUpload']['name'];
-            $dest = 'img/';
-            if(move_uploaded_file($tmp,$dest.$filename))
-                echo 'téléchargement réussi';
-        }
-    ?>
 </body>
 <script src="./assets/script.js"></script>
 <script src="./assets/uploadPreview.js"></script>
 </html>
-
 
 
 
